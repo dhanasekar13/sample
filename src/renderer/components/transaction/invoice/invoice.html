@@ -1,0 +1,130 @@
+<div class="">
+  <div class="wrapper">
+    <div class="">
+      <div>
+      <div class="">
+        <h3 v-bind:value='company'>{{company}}</h3>
+      </div>
+      <div class="">
+        <p align='center'> <h4 align='center'> SAMPLE INVOICE </h4></p>
+      </div>
+    </div>
+      <hr>
+      <div class="">
+        <div class="inv1">
+          <div class="a">
+            <label> <strong>Inv No:</strong> </label>
+              <input type="text" v-model='full.invno' v-if='a'>
+              <select class="" name="" v-else  v-model='full.selectval'>
+                <option value=""></option>
+                <option v-for='no in full.invno' v-bind:value='no'>{{no.InvNo + ' - ' + no.DESCR}}</option>
+              </select>
+          </div>
+          <div class="a">
+            <label > <strong>Inv Date :</strong> </label>
+            <input type="date" v-if='!a' name='!a1' v-model='full.selectval.InvDt'>
+            <input type="date" v-else  name='a2' v-model='full.invDt'>
+          </div>
+          <div class="a">
+            <label> <strong>PSR Name: </strong></label>
+            <input type="text" v-if='!a'  v-model='full.selectval.Name'>
+            <select class="" v-else name="">
+              <option value=""></option>
+              <option v-for='fs in full.Name'>{{fs.Code + ' - ' + fs.Name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="inv1">
+          <div class="a">
+            </div>
+          <div class="a">
+
+          </div>
+          <div class="a">
+            <p id='p1'></p>
+          </div>
+        </div>
+        <div class="">
+
+        </div>
+        <div class="inv1">
+          <div class="a">
+            <label>  <strong>No of Case :</strong> </label>
+            <input type="text"  v-model='full.selectval.Noofcases'>
+          </div>
+          <div class="a">
+            <label>  <strong>LR No :</strong> </label>
+            <input type="text"  v-model='full.selectval.LRNo'>
+          </div>
+          <div class="a">
+            <label>  <strong>LR Dt :</strong> </label>
+            <input type="date" v-if='a' name="" value="">
+            <input type="text" v-else v-model='full.selectval.LRDt'>
+
+          </div>
+          </div>
+          <br>
+          <div class="trans">
+              <div>
+            <label>  <strong>TRANSPORT :</strong> </label>
+              </div>
+              <div>
+            <input type="text"  v-model='full.selectval.trans'>
+          </div>
+          </div>
+
+        <hr>
+        <div class="">
+          <table class="table" rules='all'>
+                 <thead>
+               <th><strong>S.No</strong></th>
+                         <th><strong>Item Code</strong></th>
+                         <th><strong>Batch NO</strong></th>
+                         <th> <strong>Exp. Dt</strong> </th>
+                         <th id="divinded1"> <label><strong align='left'>Qty</strong></label><label align="center"><strong> InHand</strong></label> </th>
+                         <th> <strong>Rate</strong> </th>
+                         <th> <strong>TVALUE</strong> </th>
+                 </thead>
+                 <tbody>
+                     <tr v-for="(row, index) in full.rows">
+                         <td><label> <strong> {{index}} </strong></label> </td>
+                         <td>
+                           <div>
+                              <select class="" name="" v-if='a' v-model='row.hsn'>
+                                <option value=""></option>
+                                <option v-for="item in full.itemmas" v-bind:value='item'>{{item.SHCD + ' - ' + item.DESCR + ' - ' + item.PCAPCTY +  item.UMN}}</option>
+                              </select>
+                              <input type="text" name="" value="" v-else v-model='row.hsn'>
+                            </div>
+                         </td>
+                         <td><input type="text" v-model="row.batch = row.hsn.BatchNo"></td>
+                         <td >
+                            <input type="text" v-model='row.expdt = row.hsn.ExpDt'>
+                         </td>
+                         <td id='divinded'> <input type="text" v-model="row.qty">
+                              <p>{{row.hsn.Qty}}</p>
+                         </td>
+                         <td> <input type="text" v-model="row.rate = row.hsn.RATE"></td>
+                         <td> <input type="text" v-model="row.amount = row.hsn.MRP"></td>
+                         <td> <a  v-on:click="removeElement(index);" style="cursor: pointer">Remove</a>
+                     </td>
+                     </tr>
+                 </tbody>
+             </table>
+             <hr>
+             <div align='center'>
+                 <button class="button btn-primary" v-if='a' id='btn5' @click="addRow"> <strong> Add row</strong> </button>
+           </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+    <div class="btm" align = 'center'>
+<button type="button" name="button" value='Add NEW' v-on:click="create()"> <strong> CREATE INVOICE </strong></button>
+<button type="button" name="button" value='save' v-on:click="save()">SAVE</button>
+<button type="button" name="button" value='modify' v-on:click="report()">Modify</button>
+<button type="button" name="button" value='delete'> <b> DELETE </b></button>
+</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+.wrapper {
+  width:80%;
+  margin:4%;
+  background:lightblue
+}
+.gr1 div {
+  width:31%;
+  display:inline-block
+}
+div input,div label {
+  width:46%;
+  display:inline-block;
+}
+.trans div {
+  width:45%;
+  display:inline-block
+}
+.trans div input {
+  width:100%
+}
+td input {
+  width:90%;
+  margin-rigth:1%
+}
+input , label {
+  width:100%;
+}
+.bottom button {
+  width:23%;
+}
+#a1 {
+  width:96%;
+}

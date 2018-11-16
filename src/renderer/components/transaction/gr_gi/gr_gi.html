@@ -1,0 +1,81 @@
+<div class="">
+  <div class="wrapper">
+    <div class="">
+      <div class="">
+        <h3>{{company}}</h3>
+      </div>
+      <div class="">
+        <h3 align='center'> <b>GOODS RETURN / ISSUES</b> </h3>
+      </div>
+      <hr>
+      <div class="gr1">
+        <div class="a">
+          <label><strong>Transaction Type :</strong> </label>
+          <input type="text" name="" value="">
+        </div>
+        <div class="a">
+          <label> <b>Sl.No : </b> </label>
+          <input type="text" name="" value="">
+        </div>
+        <div class="a">
+          <label><b>Date :</b> </label>
+          <input type="date" name="" value="">
+          </div>
+      </div>
+      <div>
+        <br>
+      <div class="">
+        <label> <strong>Party Name</strong> </label>
+        <input type="text" name="" value="">
+      </div> <br>
+      <div class="">
+        <label> <strong>Remarks</strong> </label>
+        <input type="text" name="" value="">
+      </div>
+    </div>
+    <hr>
+    <div class="">
+      <table class="table">
+             <thead>
+
+           <th><strong>S.No</strong></th>
+                     <th><strong>Item Code</strong></th>
+                     <th><strong>Batch NO</strong></th>
+                     <th> <strong>Mfg Dt.</strong> </th>
+                     <th> <strong>Exp Dt.</strong> </th>
+                     <th> <strong>Qty</strong> </th>
+                     <th> <strong>Unit</strong> </th>
+                     <th> <strong>Rate</strong> </th>
+             </thead>
+             <tbody>
+                 <tr v-for="(row, index) in rows">
+           <td><label>{{index}}</label> </td>
+                     <td><input type="text" v-model="row.hsn"></td>
+                     <td><input type="text" v-model="row.batch"></td>
+                     <td><input type="date" v-model="row.mfgdt"></td>
+                     <td> <input type="text" v-model="row.expdt"></td>
+                     <td> <input type="text" v-model="row.qty"></td>
+                     <td> <input type="text" v-model="row.unit"></td>
+                     <td> <input type="text" v-model="row.rate"></td>
+                     <td> <a  v-on:click="removeElement(index);" style="cursor: pointer">Remove</a>
+                 </td>
+                 </tr>
+             </tbody>
+         </table>
+         <hr>
+         <div align='center'>
+             <button id='a1' class="button btn-primary" @click="addRow">Add row</button>
+       </div>
+    </div>
+    <hr>
+    <div class="bottom" align='center'>
+      <button type="button" name="button">
+<b>
+        ADD GR|GI </b></button>
+      <button type="button" name="button"> <b> SAVE </b></button>
+      <button type="button" name="button"> <b>FIND</b></button>
+      <button type="button" name="button"> <b>DELETE</b></button>
+    </div>
+    </div>
+  </div>
+</div>

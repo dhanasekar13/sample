@@ -1,0 +1,57 @@
+.wrapper {
+  width:95%;
+  margin:1%;
+  background:lightblue
+}
+.inv1 div {
+  width:31%;
+  display:inline-block
+}
+div input,div label{
+  width:46%;
+  display:inline-block
+}
+.inv1 div label ,.inv1 div select {
+  width:46%
+}
+
+.trans div {
+  width:46%;
+  display:inline-block
+}
+.trans div input {
+  width:100%
+}
+td input {
+  width:90%;
+  margin-rigth:1%
+}
+input , label {
+  width:100%;
+}
+div #btn5 {
+  width:90%
+}
+.btm button,.btn input {
+    width:23%
+}
+table input {
+  border:0;
+  width:98%;
+}
+div select {
+  width:100%
+}
+
+#divinded input {
+  width:50%;
+  display:inline;
+}
+#divinded p {
+  width:48%;
+  display:inline;
+}
+#divinded1 label {_
+  width:46%;
+  display:inline-block
+}
