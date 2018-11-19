@@ -5,7 +5,7 @@
       <div class="">
         <h3 v-bind:value='company'>{{company}}</h3>
       </div>
-      <div class="">
+      <div class=""><br/>
         <p align='center'> <h4 align='center'> SAMPLE INVOICE </h4></p>
       </div>
     </div>
@@ -28,9 +28,9 @@
           <div class="a">
             <label> <strong>PSR Name: </strong></label>
             <input type="text" v-if='!a'  v-model='full.selectval.Name'>
-            <select class="" v-else name="">
+            <select class="" v-else v-model='full.invname'>
               <option value=""></option>
-              <option v-for='fs in full.Name'>{{fs.Code + ' - ' + fs.Name}}</option>
+              <option v-bind:value='fs.Code' v-for='fs in full.Name'>{{fs.Code + ' - ' + fs.Name}}</option>
             </select>
           </div>
         </div>
@@ -50,17 +50,18 @@
         <div class="inv1">
           <div class="a">
             <label>  <strong>No of Case :</strong> </label>
-            <input type="text"  v-model='full.selectval.Noofcases'>
+            <input type="text" v-if='a' v-model='full.selectval.Noofcases'>
+            <input type='text' v-else v-model='full.noofcases'>
           </div>
           <div class="a">
             <label>  <strong>LR No :</strong> </label>
-            <input type="text"  v-model='full.selectval.LRNo'>
+            <input type="text"  v-if='a' v-model='full.selectval.LRNo'>
+            <input type='text' v-else v-model='full.lrno'>
           </div>
           <div class="a">
             <label>  <strong>LR Dt :</strong> </label>
-            <input type="date" v-if='a' name="" value="">
+            <input type="date" v-if='a' name="" v-model='full.lrdt'>
             <input type="text" v-else v-model='full.selectval.LRDt'>
-
           </div>
           </div>
           <br>
@@ -69,7 +70,8 @@
             <label>  <strong>TRANSPORT :</strong> </label>
               </div>
               <div>
-            <input type="text"  v-model='full.selectval.trans'>
+            <input type="text" v-if='a'  v-model='full.selectval.trans'>
+            <input type='text' v-else v-model='full.transport'>
           </div>
           </div>
 
@@ -122,7 +124,7 @@
     <div class="btm" align = 'center'>
 <button type="button" name="button" value='Add NEW' v-on:click="create()"> <strong> CREATE INVOICE </strong></button>
 <button type="button" name="button" value='save' v-on:click="save()">SAVE</button>
-<button type="button" name="button" value='modify' v-on:click="report()">Modify</button>
+<router-link to="/transaction_report/invoiceno" tag="button">Report</router-link>
 <button type="button" name="button" value='delete'> <b> DELETE </b></button>
 </div>
     </div>

@@ -8,7 +8,9 @@ var rp = {
   FAX: 28362924,
   EMAIL: 'retortpharma@gmail.com',
   TIN: 33641500087,
-  CSTNO: '56647/15-12-1983'
+  GSTIN: '33AAACR2993J1Z7',
+  CSTNO: '56647/15-12-1983',
+  AREACODE: '076'
 }
 var rl = {
   CCODE: '02',
@@ -20,6 +22,7 @@ var rl = {
   FAX: 28362924,
   EMAIL: 'retortlab@gmail.com',
   TIN: 33171500103,
+  GSTIN: '33AAACR2993J1Z7',
   CSTNO: '49964/10-12-1969'
 }
 var kc = {
@@ -32,6 +35,7 @@ var kc = {
   FAX: 28362924,
   EMAIL: 'kc@gmail.com',
   TIN: 33311500026,
+  GSTIN: '33AAACR2993J1Z7',
   CSTNO: '24598/24-07-1974'
 }
 export {

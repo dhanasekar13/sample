@@ -12,7 +12,6 @@
 <input type="radio" name="gender" v-model="ptype" value="OT"> <p>Others</p>
 </form>
 </div>
-<br>
 <div id="a2">
   <div>
 <label><h2>State : </h2></label>
@@ -27,7 +26,7 @@
 <option v-for="dt in DtCode" v-bind:value="dt['DtCode']">{{dt['DtCode'] + ' - ' + dt['DtName']}}</option>
 </select>
 </div>
-</div><br>
+</div>
 <div id="a3">
   <div id="a31">
 <label><h2 >Customer code : </h2></label>
@@ -40,15 +39,15 @@
 </div></div><div id="a32">
 <label><h2>Name : </h2></label>
 <input type="text" v-model="PNAME" required>
-</div></div><br>
+</div></div>
 <div id="a4">
 <label><h2>Address1  :</h2></label>
 <input type="text" v-model="Address1" required>
-</div><br>
+</div>
 <div id="a5">
 <label><h2>Address2 :</h2></label>
 <input type="text" v-model="Address2">
-</div><br>
+</div>
 <div id="a6">
 <label><h2>Address3  :</h2></label>
 <input type="text" v-model="Address3">
@@ -97,8 +96,8 @@
 <label><h2>TRANSPORT</h2></label>
 <input type="text" v-model="TRAN">
 </div>
-</div><br><hr>
-<br style="margin:20">
+</div><hr>
+
 <div id="a12" align="center">
   <input type="submit"  value="Create" v-on:click="change(creat)" >
   <input type="submit"  value="Save" v-on:click="change(save)"  >

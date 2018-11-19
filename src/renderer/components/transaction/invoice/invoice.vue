@@ -2,7 +2,8 @@
 
 </template>
 <script>
-import { tmpinvdetl } from '@/components/database/table'
+import { remote } from 'electron'
+import { tmpinvdetl, invControl } from '@/components/database/table'
 import { queryExecSample, mysql, insertRecord } from '@/components/database/dbConnection'
 const storage = require('electron-json-storage')
 export default {
@@ -17,7 +18,12 @@ export default {
         invno: '',
         selectval: '',
         invDt: '',
-        Name: ''
+        Name: '',
+        invname: '',
+        noofcases: '',
+        lrno: '',
+        lrdt: '',
+        transport: ''
       }
     }
   },
@@ -96,7 +102,6 @@ export default {
             console.log(tmpinvdetl)
             var tablename = 'tmpinvdetl'
             insertRecord(tablename, tmpinvdetl).then(function () {
-              alert('Inserted Successfully')
               resolve(1)
             }, function () {
               alert('sorry record is not inserted  try again')
@@ -106,16 +111,48 @@ export default {
       })
     },
     updateStkdetl: function (data) {
-      console.log('Update Stock Details')
+      return new Promise((resolve, reject) => {
+        console.log('Update Stock Details')
+        console.log(data)
+        for (var i = 0; i < data.rows.length; i++) {
+          let query = 'Update `stkdetl` set `qty` = `qty` - ' + mysql.escape(data.rows[i].qty) + 'where `itemcd` =  ' + mysql.escape(data.rows[i].hsn.ItemCd) + ' and batchno = ' + mysql.escape(data.rows[i].batch) + ' and ccode = ' + mysql.escape(data.company)
+          queryExecSample(query)
+            .then(data => {
+              console.log('updated ' + i + 'time')
+            })
+            .catch(err => alert(err))
+        }
+        resolve(i)
+      })
+    },
+    insertinvcontrol: function (data) {
       console.log(data)
-      //  data.rows[index].hsn.ItemCd
-      // data.batch
-      //  data.qty
-      //   on particular item on this batch reduce the value
-      for (var i = 0; i < data.rows.length; i++) {
-        let query = 'Update `stkdetl` set `qty` = `qty` - ' + mysql.escape(data.qty) + 'where `itemcd` =  ' + mysql.escape(data.rows[i].hsn.ItemCd) + ' and batchno = ' + mysql.escape(data.rows[i].hsn.batchno) + ' and ccode = ' + mysql.escape(data.company)
-        console.log(query)
-      }
+      return new Promise((resolve, reject) => {
+        console.log(this.full)
+        for (var i = 0; i < this.full.rows.length; i++) {
+          invControl.Type = 'SAMPLE'
+          invControl.CCode = this.full.company
+          invControl.period = this.full.period
+          invControl.InvNo = this.full.invno
+          invControl.InvDt = this.full.invDt
+          invControl.Pcode = this.full.invname
+          invControl.Noofcases = this.full.noofcases
+          invControl.YOrdDt = this.full.invDt
+          invControl.LRNo = this.full.lrno
+          invControl.LRDt = this.full.lrdt
+          invControl.Doc = this.full.transport
+          invControl.InvFlag = 'N'
+          invControl.Stkexpflag = 'Y'
+          console.log(invControl)
+          var tablename = 'invControl'
+          console.log(tablename)
+          insertRecord(tablename, invControl).then(function () {
+            resolve(1)
+          }, function () {
+            alert('sorry record is not inserted  try again')
+          })
+        }
+      })
     },
     save: function () {
       console.log('save the data')
@@ -128,16 +165,18 @@ export default {
                 var query1 = 'Insert into `invdetails` select * from `tmpinvdetl` where ccode = ' + mysql.escape(this.full.company)
                 queryExecSample(query1)
                   .then((val) => {
-                    alert('invoice is inserted successfully')
                     this.updateStkdetl(this.full)
+                      .then(val => {
+                        this.insertinvcontrol(this.full)
+                          .then(val => {
+                            alert('final')
+                            remote.getCurrentWindow().reload()
+                          })
+                      })
                   })
               }
             })
         })
-    },
-    report: function () {
-      console.log('reload')
-      alert('hey this is where you enter the invoice no to print')
     },
     changefield: function () {
       var current = this
@@ -193,7 +232,7 @@ export default {
       })
     },
     removeElement: function (index) {
-      this.rows.splice(index, 1)
+      this.full.rows.splice(index, 1)
     }
   }
 }
