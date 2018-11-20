@@ -3,6 +3,7 @@
 </template>
 <script>
 import { rl, rp, kc } from '@/components/database/company'
+import { mysql, queryExecSample } from '@/components/database/dbConnection'
 const prompt = require('electron-prompt')
 const storage = require('electron-json-storage')
 export default {
@@ -12,7 +13,8 @@ export default {
         company: '',
         period: '',
         companydetails: {},
-        invoiceno: ''
+        invoiceno: '',
+        invoicedata: {}
       }
     }
   },
@@ -22,8 +24,20 @@ export default {
     console.log(this.invoice)
   },
   methods: {
+    formatDate: function (date) {
+      var dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().split('T')[0]
+      console.log(dateString)
+      return dateString
+    },
     invoicefnt: function () {
       console.log(this.invoice)
+      let query = 'SELECT * FROM `invdetails` a INNER JOIN `invcontrol` b ON a.CCode=b.CCode and a.period=b.period and a.InvNo = b.InvNo and a.InvDt = b.InvDt INNER JOIN `imas` c ON a.ItemCode = c.SHCD INNER JOIN `fsmpsr` d ON b.Pcode = d.Code WHERE a.period=' + mysql.escape(this.invoice.period) + 'and a.InvNo=' + mysql.escape(this.invoice.invoiceno)
+      console.log(query)
+      queryExecSample(query)
+        .then((data) => {
+          this.invoice.invoicedata = data
+          console.log(this.invoice.invoicedata)
+        })
     },
     prompted: function () {
       prompt({

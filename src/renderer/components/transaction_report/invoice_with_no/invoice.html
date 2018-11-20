@@ -1,62 +1,59 @@
-<div class='container'>
+<div class='container border border-primary'>
     <div class='card'>
       <div class='card-header'>
           <div>
               <strong> {{invoice.companydetails.CNAME}}</strong>
-              <span class='float-right'>TIN: &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{invoice.companydetails.TIN}}</span>
+              <span class='float-right'>TIN : &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{invoice.companydetails.TIN}}</span>
           </div>
           <div>
             <strong>{{invoice.companydetails.ADD1 + invoice.companydetails.ADD2}}</strong>
-            <span class='float-right'>CST NO:  &nbsp&nbsp&nbsp{{invoice.companydetails.CSTNO}}</span>
+            <span class='float-right'>CST NO : &nbsp&nbsp&nbsp{{invoice.companydetails.CSTNO}}</span>
           </div>
           <div>
             <strong>{{invoice.companydetails.ADD3}}</strong>
-            <span class='float-right'>DL NO : &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 2111/MZ/I/20B
-              <br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            <span class='float-right'>DL NO : &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 2111/MZ/I/20B<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                              2061/MZ/I/21B
               </span>
           </div>
           <br>
           <div>
             Phone : {{invoice.companydetails.PHONE}}, Fax : {{invoice.companydetails.FAX}}
-            <span class='float-right'>AREA CODE :   {{invoice.companydetails.AREACODE}}</span>
+            <span class='float-right'>AREA CODE : &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   {{invoice.companydetails.AREACODE}}</span>
           </div>
           <div>
         GSTIN : {{invoice.companydetails.GSTIN}}
           </div>
-          <br>
-          <br>
+
           <div>
-          <span class='text-center'><h3><ins>SAMPLE PACKING SLIP</ins></h3></span>
+          <span class='text-center'><h2><ins>SAMPLE PACKING SLIP</ins></h2></span>
           </div>
       </div>
-      <hr>
       <div class='card-body'>
         <div class='row mb-4'>
             <div class='col-sm-6'>
                 <h6 class='mb-3'>To -</h6>
                     <div>
-                    <strong>to the invoice person</strong>
+                    <strong>{{invoice.invoicedata[0].Name}}</strong>
                     </div>
-                    <div>address 1</div>
-                    <div>address 2</div>
-                    <div>address 3 + phone no</div>
+                    <div>{{invoice.invoicedata[0].Address1}}</div>
+                    <div>{{invoice.invoicedata[0].Address2}}</div>
+                    <div>{{invoice.invoicedata[0].Address3  + ' ,phone no- ' + invoice.invoicedata[0].Phone}}</div>
                     <div></div>
             </div>
             <div class='col-sm-6'>
                 <h6 class='mb-3'></h6>
                     <div>
-                    <span>Packing Slip no & date : to the invoice person</span>
+                    <span>Packing Slip no & date : {{invoice.invoicedata[0].InvNo + '   ,   ' + this.formatDate(invoice.invoicedata[0].InvDt)}}</span>
                     </div>
-                    <div>Transport :address 1</div>
-                    <div>Destination : adress 2 </div>
+                    <div>Transport &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: {{invoice.invoicedata[0].trans}}</div>
+                    <div>Destination &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: {{invoice.invoicedata[0].desti}} </div>
                     <div></div>
-                    <div>other information</div>
+
             </div>
         </div>
         <hr>
-        <div class='table-responsive-sm'>
-          <table class='table table-striped'>
+        <div class='table-responsive-sm '>
+          <table class='table table-sm'>
               <thead>
                   <tr>
                       <th class='center'>Sl. No </th>
@@ -71,172 +68,65 @@
                   </tr>
               </thead>
               <tbody>
-                  <tr>
-                      <td>1</td>
-                      <td>various</td>
-                      <td>sdf</td>
-                      <td>adsf</td>
-                      <td>adsf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>adf</td>
+                  <tr v-for="(inv, index) in invoice.invoicedata">
+                      <td>{{index + 1}}</td>
+                      <td>{{inv.DESCR}}</td>
+                      <td></td>
+                      <td>{{inv.BatchNo}}</td>
+                      <td>{{new Date(inv.ExpDt.getTime() - (inv.ExpDt.getTimezoneOffset() * 60000)).toISOString().split('T')[0]}}</td>
+                      <td>{{inv.Qty}}</td>
+                      <td>0</td>
+                      <td>0</td>
+                      <td>0</td>
                   </tr>
-                  <tr>
-                      <td>1</td>
-                      <td>various</td>
-                      <td>sdf</td>
-                      <td>adsf</td>
-                      <td>adsf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>adf</td>
-                  </tr>
-                  <tr>
-                      <td>1</td>
-                      <td>various</td>
-                      <td>sdf</td>
-                      <td>adsf</td>
-                      <td>adsf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>adf</td>
-                  </tr>
-                  <tr>
-                      <td>1</td>
-                      <td>various</td>
-                      <td>sdf</td>
-                      <td>adsf</td>
-                      <td>adsf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>adf</td>
-                  </tr>
-                  <tr>
-                      <td>1</td>
-                      <td>various</td>
-                      <td>sdf</td>
-                      <td>adsf</td>
-                      <td>adsf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>adf</td>
-                  </tr>
-                  <tr>
-                      <td>1</td>
-                      <td>various</td>
-                      <td>sdf</td>
-                      <td>adsf</td>
-                      <td>adsf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>adf</td>
-                  </tr>
-                  <tr>
-                      <td>1</td>
-                      <td>various</td>
-                      <td>sdf</td>
-                      <td>adsf</td>
-                      <td>adsf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>adf</td>
-                  </tr>
-                  <tr>
-                      <td>1</td>
-                      <td>various</td>
-                      <td>sdf</td>
-                      <td>adsf</td>
-                      <td>adsf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>adf</td>
-                  </tr>
-                  <tr>
-                      <td>1</td>
-                      <td>various</td>
-                      <td>sdf</td>
-                      <td>adsf</td>
-                      <td>adsf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>adf</td>
-                  </tr>
-                  <tr>
-                      <td>1</td>
-                      <td>various</td>
-                      <td>sdf</td>
-                      <td>adsf</td>
-                      <td>adsf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>adf</td>
-                  </tr>
-                  <tr>
-                      <td>1</td>
-                      <td>various</td>
-                      <td>sdf</td>
-                      <td>adsf</td>
-                      <td>adsf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>adf</td>
-                  </tr>
-                  <tr>
-                      <td>1</td>
-                      <td>various</td>
-                      <td>sdf</td>
-                      <td>adsf</td>
-                      <td>adsf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>adf</td>
-                  </tr>
-                  <tr>
-                      <td>1</td>
-                      <td>various</td>
-                      <td>sdf</td>
-                      <td>adsf</td>
-                      <td>adsf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>asdf</td>
-                      <td>adf</td>
-                  </tr>
+
               </tbody>
           </table>
         </div>
       </div>
-      <div class="card-footer text-muted">
-        <div>
-          <span class='text-center'><h4><ins>Declaration</ins></h4></span>
-        </div>
-        <div>
-          <span>
-            This Consignment contains physician samples, Literature for free distribution to the medical profession and has
-            <strong>"NO COMMERCIAL VALUE"</strong>
-          </span>
-        </div>
-        <div>
+    <hr>
+      <div class="page-footer card-footer text-muted">
+            <div>
+                <span class='text-center'><h4><ins>Declaration</ins></h4></span>
+            </div>
+            <div>
+                <span>
+                    This Consignment contains physician samples, Literature for free distribution to the medical profession and has
+                    <strong>"NO COMMERCIAL VALUE"</strong>
+                </span>
+            </div>
+            <div>
+              <div class='row mb-4'>
+                <div class='col-sm-6'>
 
+                      <div>OCTROI VALUE   &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp :
+                      </div>
+                      <div>No. Of Cartons / Boxes  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp :</div>
+                      <div>No. Of Adj.Cartons / Boxes&nbsp &nbsp&nbsp&nbsp&nbsp  :</div>
+                      <div>Prepard BY&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp  :</div>
+                      <div></div>
+                </div>
+                <div class='col-sm-6'>
+                  <h6 class='mb-3'></h6>
+                      <div>
+                      </div>
+                      <div>
+                      </div>
+                      <div>Total Value &nbsp&nbsp&nbsp&nbsp :</div>
+                      <div>Weigth&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp  : </div>
+                      <div></div>
+                  </div>
+          </div>
         </div>
         <div>
-          <span>
-              CC To : PSR / HO / TRANSPORTERS / STORES / TO BE SIGNED & RETURNED BY PSR ..
+          <div>
+          <span>CC To : PSR / HO / TRANSPORTERS / STORES / TO BE SIGNED & RETURNED BY PSR.
           </span>
+          </div>
+          <div>
           <span>    NOTE  : If this packing slip is not returned after clearence of consignment and verification with your signature further reimbursement will be with held.
             </span>
+            </div>
         </div>
         <div>
           <span class='float-right'>For {{invoice.companydetails.CNAME}}&nbsp&nbsp</span>

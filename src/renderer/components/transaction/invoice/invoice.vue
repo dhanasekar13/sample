@@ -6,6 +6,7 @@ import { remote } from 'electron'
 import { tmpinvdetl, invControl } from '@/components/database/table'
 import { queryExecSample, mysql, insertRecord } from '@/components/database/dbConnection'
 const storage = require('electron-json-storage')
+const prompt = require('electron-prompt')
 export default {
   data () {
     return {
@@ -23,7 +24,8 @@ export default {
         noofcases: '',
         lrno: '',
         lrdt: '',
-        transport: ''
+        transport: '',
+        delete: ''
       }
     }
   },
@@ -47,6 +49,7 @@ export default {
           current.full.itemmas = data
           // var dummy = 'SELECT * FROM `invcontrol` a, `invdetails` b, `imas` c, `fsmpsr` d where a.CCode = '01' and a.CCode = b.CCode and a.period = b.period and a.period = '18-19' and a.InvNo = b.InvNo and b.ItemCode = c.SHCD and d.Code = a.Pcode'
           //  var query1 = 'SELECT * FROM `invdetails` a, imas m WHERE a.`CCode`=' + mysql.escape(current.full.company) + ' and a.`period`= ' + mysql.escape(current.full.period) + ' and a.ItemCode = m.SHCD'
+          /*
           var query1 = 'SELECT * FROM `invcontrol` a, `invdetails` b, `imas` c, `fsmpsr` d where a.CCode = ' + mysql.escape(current.full.company) + ' and a.CCode = b.CCode and a.period = b.period and a.period = ' + mysql.escape(current.full.period) + ' and a.InvNo = b.InvNo and b.ItemCode = c.SHCD and d.Code = a.Pcode'
           var value1 = queryExecSample(query1)
           value1.then(function (data) {
@@ -57,11 +60,58 @@ export default {
               current.full.invo = ''
             }
           })
+          */
         }
       })
     }))
   },
   methods: {
+    deleteinv: function () {
+      prompt({
+        title: 'Enter the Invoice Number To Delete',
+        label: 'INVOICE NUMBER',
+        type: 'input'
+      })
+        .then(value => {
+          console.log(value)
+          this.full.delete = value
+          this.updatestk()
+          this.deletefnt()
+        })
+    },
+    updatestk: function () {
+      let query = 'Select * from invdetails where invno = ' + mysql.escape(this.full.delete) + ' and period = ' + mysql.escape(this.full.period) + ' and ccode = ' + mysql.escape(this.full.company)
+      return new Promise((resolve, reject) => {
+        queryExecSample(query)
+          .then((data) => {
+            console.log(data)
+            for (var i = 0; i < data.length; i++) {
+              let query = 'Update stkcntl set runqty = runqty + ' + data[i].Qty + data[i].FreeQty + ', IssueQtytot = IssueQtytot - ' + data[i].Qty + data[i].FreeQty + ' where itemcd = ' + mysql.escape(data[i].ItemCode) + ' and ccode = ' + data[i].CCode
+              queryExecSample(query)
+                .then((data1) => {
+                  console.log('right')
+                }).catch(err => (console.log(err)))
+              let query1 = 'Update stkdetl set qty = qty + ' + data[i].Qty + data[i].FreeQty + ' where itemcd = ' + mysql.escape(data[i].ItemCode) + ' and batchno = ' + mysql.escape(data[i].BatchNo) + ' and ccode = ' + mysql.escape(data[i].CCode)
+              queryExecSample(query1)
+                .then((data2) => {
+                  console.log('left')
+                }).catch((err) => console.log(err))
+            }
+          })
+      })
+    },
+    deletefnt: function () {
+      let query = 'DELETE FROM `invcontrol` where InvNo = ' + mysql.escape(this.full.delete) + ' and period = ' + mysql.escape(this.full.period) + ' and CCode = ' + mysql.escape(this.full.company)
+      queryExecSample(query)
+        .then((data1) => {
+          console.log(data1)
+        }).catch(err => (console.log(err)))
+      let query1 = 'DELETE FROM `invdetails` where InvNo = ' + mysql.escape(this.full.delete) + ' and period = ' + mysql.escape(this.full.period) + ' and CCode = ' + mysql.escape(this.full.company)
+      queryExecSample(query1)
+        .then((data2) => {
+          console.log(data2)
+        }).catch(err => (console.log(err)))
+    },
     deletetempinvoice: function () {
       let query = 'DELETE FROM `tmpinvdetl` WHERE 1'
       return new Promise((resolve, reject) => {
@@ -129,29 +179,27 @@ export default {
       console.log(data)
       return new Promise((resolve, reject) => {
         console.log(this.full)
-        for (var i = 0; i < this.full.rows.length; i++) {
-          invControl.Type = 'SAMPLE'
-          invControl.CCode = this.full.company
-          invControl.period = this.full.period
-          invControl.InvNo = this.full.invno
-          invControl.InvDt = this.full.invDt
-          invControl.Pcode = this.full.invname
-          invControl.Noofcases = this.full.noofcases
-          invControl.YOrdDt = this.full.invDt
-          invControl.LRNo = this.full.lrno
-          invControl.LRDt = this.full.lrdt
-          invControl.Doc = this.full.transport
-          invControl.InvFlag = 'N'
-          invControl.Stkexpflag = 'Y'
-          console.log(invControl)
-          var tablename = 'invControl'
-          console.log(tablename)
-          insertRecord(tablename, invControl).then(function () {
-            resolve(1)
-          }, function () {
-            alert('sorry record is not inserted  try again')
-          })
-        }
+        invControl.Type = 'SAMPLE'
+        invControl.CCode = this.full.company
+        invControl.period = this.full.period
+        invControl.InvNo = this.full.invno
+        invControl.InvDt = this.full.invDt
+        invControl.Pcode = this.full.invname
+        invControl.Noofcases = this.full.noofcases
+        invControl.YOrdDt = this.full.invDt
+        invControl.LRNo = this.full.lrno
+        invControl.LRDt = this.full.lrdt
+        invControl.Doc = this.full.transport
+        invControl.InvFlag = 'N'
+        invControl.Stkexpflag = 'Y'
+        console.log(invControl)
+        var tablename = 'invControl'
+        console.log(tablename)
+        insertRecord(tablename, invControl).then(function () {
+          resolve(1)
+        }, function () {
+          alert('sorry record is not inserted  try again')
+        })
       })
     },
     save: function () {

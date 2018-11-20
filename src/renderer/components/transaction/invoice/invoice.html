@@ -2,10 +2,8 @@
   <div class="wrapper">
     <div class="">
       <div>
+
       <div class="">
-        <h3 v-bind:value='company'>{{company}}</h3>
-      </div>
-      <div class=""><br/>
         <p align='center'> <h4 align='center'> SAMPLE INVOICE </h4></p>
       </div>
     </div>
@@ -76,14 +74,14 @@
           </div>
 
         <hr>
-        <div class="">
-          <table class="table" rules='all'>
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered" rules='all'>
                  <thead>
                <th><strong>S.No</strong></th>
                          <th><strong>Item Code</strong></th>
-                         <th><strong>Batch NO</strong></th>
-                         <th> <strong>Exp. Dt</strong> </th>
-                         <th id="divinded1"> <label><strong align='left'>Qty</strong></label><label align="center"><strong> InHand</strong></label> </th>
+                         <th  class="right"><strong>Batch NO</strong></th>
+                         <th  class="right"> <strong>Exp. Dt</strong> </th>
+                         <th  class="right" id="divinded1"> <label><strong align='left'>Qty</strong></label><label align="center"><strong> InHand</strong></label> </th>
                          <th> <strong>Rate</strong> </th>
                          <th> <strong>TVALUE</strong> </th>
                  </thead>
@@ -123,9 +121,9 @@
     </div>
     <div class="btm" align = 'center'>
 <button type="button" name="button" value='Add NEW' v-on:click="create()"> <strong> CREATE INVOICE </strong></button>
-<button type="button" name="button" value='save' v-on:click="save()">SAVE</button>
-<router-link to="/transaction_report/invoiceno" tag="button">Report</router-link>
-<button type="button" name="button" value='delete'> <b> DELETE </b></button>
+<button class='btn-primary' type="button" name="button" value='save' v-on:click="save()">SAVE</button>
+<router-link class='btn-warning' to="/transaction_report/invoiceno" tag="button">Report</router-link>
+<button class='btn-danger' type="button" name="button" value='delete' v-on:click="deleteinv()"> <b> DELETE </b></button>
 </div>
     </div>
   </div>
