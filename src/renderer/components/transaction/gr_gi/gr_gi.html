@@ -1,5 +1,5 @@
-<div class="">
-  <div class="wrapper">
+<div class="container">
+  <div class="">
     <div class="">
       <div class="">
         <h4 align='center'>{{company}}</h4>
@@ -18,22 +18,22 @@
         </div>
         <div class="col-xs-1 a">
           <label> <b>Sl.No : </b> </label>
-          <input type="text" class='form-control' name="" value="">
+          <input v-model='gno' type="text" class='form-control' name="" value="">
         </div>
         <div class="col-xs-1 a">
           <label><b>Date :</b> </label>
-          <input type="date" class='form-control' name="" value="">
+          <input type="date" v-model='gdate' class='form-control' name="" value="">
           </div>
       </div>
       <div>
 <br>
       <div class="form-group">
         <label class='col-sm-5'> <strong>Party Name</strong> </label>
-        <input type="text" name="" value="">
+        <input type="text" v-model='gname' name="" value="">
       </div>
       <div class="form-group">
         <label class='col-sm-5'> <strong>Remarks</strong> </label>
-        <input type="text" name="" value="">
+        <input type="text" name="" v-model='gremark' value="">
       </div>
     </div>
 
@@ -52,13 +52,18 @@
              <tbody>
                  <tr v-for="(row, index) in rows">
                      <td><label>{{index + 1}}</label> </td>
-                     <td><input type="text" v-model="row.hsn"></td>
-                     <td><input type="text" v-model="row.batch"></td>
-                     <td><input type="date" v-model="row.mfgdt"></td>
-                     <td> <input type="text" v-model="row.expdt"></td>
-                     <td> <input type="text" v-model="row.qty"></td>
-                     <td> <input type="text" v-model="row.unit"></td>
-                     <td> <input type="text" v-model="row.rate"></td>
+                     <td>
+                        <select class="" name="" v-model="row.data1">
+                          <option value=""></option>
+                          <option v-bind:value='value' v-for="value in gds">{{value.ItemCd + ' -  ' + value.DESCR + ' - ' + value.BatchNo}}</option>
+                        </select>
+                     </td>
+                     <td><input type="text" v-model="row.batch = row.data1.BatchNo"></td>
+                     <td><input type="text" v-model="row.mfgdt = row.data1.MfgDt"></td>
+                     <td> <input type="text" v-model="row.expdt = row.data1.ExpDt"><span>Qty in Hand</span></td>
+                     <td> <input type="text" v-model="row.qty"><span>{{row.data1.Qty}}</span></td>
+                     <td> <input type="text" v-model="row.unit = row.data1.RUnit"></td>
+                     <td> <input type="text" v-model="row.rate = row.data1.RATE"></td>
                      <td> <a  v-on:click="removeElement(index);" style="cursor: pointer">Remove</a>
                  </td>
                  </tr>
@@ -70,7 +75,7 @@
        </div>
     </div>
     <hr>
-    <div class="bottom" align='center'>
+    <div class="bottom" align='center' v-on:click="creategoods()">
       <button type="button" name="button">
 <b>CREATE</b></button>
       <button type="button" name="button"> <b>FIND</b></button>

@@ -1,14 +1,14 @@
-<div>
-  <div class="container">
-    <header align=center>
+<div >
+  <div >
+    <header class='card-title' align=center>
       <h1>ITEM MASTER</h1>
     </header>
     <hr>
-    <form v-on:submit.prevent="hit">
+    <form class='form-group' v-on:submit.prevent="hit">
     <div id="a1">
       <div id="a11">
       <label><h2>Item Code : </h2></label>
-      <input type="text"  v-model="itemCode" required>
+      <input type="text"  c v-model="itemCode" required>
     </div><div id="a12">
       <label><h2>Name : </h2></label>
       <input type="text" v-model="itemName" required>
@@ -64,7 +64,6 @@
         <input type="text" name="" value="S" v-model="itemTaxFlag">
       </div>
     </div>
-    <br><br>
     <div id="a7">
     <input type="submit"  value="Create" v-on:click="change(creat)" >
     <input type="submit"  value="Save" v-on:click="change(save)"  >

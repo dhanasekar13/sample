@@ -1,6 +1,7 @@
 <template src='./gr_gi.html'>
 </template>
 <script>
+// import { remote } from 'electron'
 import { queryExecSample, mysql } from '@/components/database/dbConnection'
 const storage = require('electron-json-storage')
 export default {
@@ -10,6 +11,11 @@ export default {
       type: '',
       companycode: '',
       period: '',
+      gno: '',
+      gdate: '',
+      gname: '',
+      gremark: '',
+      gds: {},
       gr: {
         data: {}
       },
@@ -38,24 +44,80 @@ export default {
     }))
   },
   methods: {
+    stockupdate: function () {
+      if (this.type === 'GI') {
+        for (let i = 0; i < this.rows.length; i++) {
+          let query1 = 'Update stkcntl set runqty = runqty - ' + mysql.escape(this.rows[i].qty) + ', IssueQtytot = IssueQtytot + ' + mysql.escape(this.rows[i].qty) + ' where itemcd = ' + mysql.escape(this.rows[i].data1.ItemCd) + ' and ccode = ' + mysql.escape(this.companycode)
+          queryExecSample(query1)
+            .then(data => {
+              console.log(i)
+            }).catch(err => console.log(err))
+          let query2 = 'Update stkdetl set qty = qty - ' + mysql.escape(this.rows[i].qty) + ' where itemcd = ' + mysql.escape(this.rows[i].data1.ItemCd) + ' and batchno = ' + mysql.escape(this.rows[i].batch) + ' and ccode = ' + mysql.escape(this.companycode)
+          queryExecSample(query2)
+            .then(data1 => {
+              console.log(i)
+            }).catch(err => console.log(err))
+        }
+      } else {
+        for (let i = 0; i < this.rows.length; i++) {
+          let query3 = 'Update stkcntl set runqty = runqty + ' + mysql.escape(this.rows[i].qty) + ', IssueQtytot = IssueQtytot - ' + mysql.escape(this.rows[i].qty) + ' where itemcd = ' + mysql.escape(this.rows[i].data1.ItemCd) + ' and ccode = ' + mysql.escape(this.companycode)
+          queryExecSample(query3)
+            .then(data => {
+              console.log(i)
+            })
+          let query4 = 'Update stkdetl set qty = qty + ' + mysql.escape(this.rows[i].qty) + ' where itemcd = ' + mysql.escape(this.rows[i].data1.ItemCd) + ' and batchno = ' + mysql.escape(this.rows[i].batch) + ' and ccode = ' + mysql.escape(this.companycode)
+          queryExecSample(query4)
+            .then(data => {
+              console.log(i)
+            })
+        }
+      }
+    },
+    creategoods: function () {
+      let query = 'Update `TmpGRGI` set `period` = ' + mysql.escape(this.period) + ', `TRNo` = ' + mysql.escape(this.gno) + ', `TRDate` = ' + mysql.escape(this.gdate) + ', `ccode` = ' + mysql.escape(this.companycode) + ', `Type` = ' + mysql.escape(this.type) + ', `Pname` = ' + mysql.escape(this.gname)
+      queryExecSample(query)
+        .then(data => {
+          console.log(data)
+          let query1 = 'Insert into `GRGITran` select * from `TmpGRGI`'
+          queryExecSample(query1)
+            .then(data1 => {
+              let query2 = 'Delete from `TmpGRGI`'
+              queryExecSample(query2)
+                .then(data2 => {
+                  console.log('ddd')
+                  console.log(data2)
+                  // remote.getCurrentWindow().reload()
+                }).catch(err => console.log(err))
+            }).catch(err => console.log(err))
+        }).catch(err => console.log(err))
+      this.stockupdate()
+    },
     goods: function () {
       console.log(this.type)
       if (this.type === 'GI') {
         let query = 'SELECT * FROM `stkdetl` a INNER JOIN `imas` b ON a.CCode = b.CCode and a.ItemCd = b.SHCD and a.Qty > 0'
         queryExecSample(query)
           .then(data => {
-            console.log(data)
+            this.gi.data = data
+            this.gds = this.gi.data
           })
         let query1 = 'SELECT `TRNo` FROM `grgitran` WHERE `period` = ' + mysql.escape(this.period) + ' AND `Ccode` = ' + mysql.escape(this.companycode) + ' AND `Type`="GI" ORDER BY `TRNo` DESC LIMIT 1'
-        console.log(query1)
+        queryExecSample(query1)
+          .then(data1 => {
+            this.gno = data1[0].TRNo + 1
+          })
       } else {
         let query = 'SELECT * FROM `stkdetl` a INNER JOIN `imas` b ON a.CCode = b.CCode and a.ItemCd = b.SHCD'
         queryExecSample(query)
-          .then(data => {
-            console.log(data)
+          .then(data2 => {
+            this.gr.data = data2
+            this.gds = this.gr.data
           })
         let query1 = 'SELECT `TRNo` FROM `grgitran` WHERE `period` = ' + mysql.escape(this.period) + ' AND `Ccode` = ' + mysql.escape(this.companycode) + ' AND Type="GR" ORDER BY TRNo DESC LIMIT 1'
-        console.log(query1)
+        queryExecSample(query1)
+          .then(data3 => {
+            this.gno = data3[0].TRNo + 1
+          })
       }
     },
     hit: function (data) {
@@ -71,7 +133,8 @@ export default {
         'expdt': '',
         'qty': '',
         'unit': '',
-        'rate': ''
+        'rate': '',
+        'data1': {}
       })
     },
     removeElement: function (index) {
