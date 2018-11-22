@@ -1,7 +1,7 @@
 <template src='./gr_gi.html'>
 </template>
 <script>
-// import { remote } from 'electron'
+import { remote } from 'electron'
 import { queryExecSample, mysql } from '@/components/database/dbConnection'
 const storage = require('electron-json-storage')
 export default {
@@ -72,30 +72,32 @@ export default {
             })
         }
       }
+      alert('successfully stock updated')
     },
     creategoods: function () {
-      let query = 'Update `TmpGRGI` set `period` = ' + mysql.escape(this.period) + ', `TRNo` = ' + mysql.escape(this.gno) + ', `TRDate` = ' + mysql.escape(this.gdate) + ', `ccode` = ' + mysql.escape(this.companycode) + ', `Type` = ' + mysql.escape(this.type) + ', `Pname` = ' + mysql.escape(this.gname)
+      this.stockupdate()
+      let query = 'Update `TmpGRGI` set `period` = ' + mysql.escape(this.period) + ', `TRNo` = ' + mysql.escape(this.gno) + ', `TRDate` = ' + mysql.escape(this.gdate) + ', `ccode` = ' + mysql.escape(this.companycode) + ', `Remarks` = ' + mysql.escape(this.gremark) + ', `Type` = ' + mysql.escape(this.type) + ', `Pname` = ' + mysql.escape(this.gname)
       queryExecSample(query)
         .then(data => {
           console.log(data)
           let query1 = 'Insert into `GRGITran` select * from `TmpGRGI`'
           queryExecSample(query1)
             .then(data1 => {
-              let query2 = 'Delete from `TmpGRGI`'
+              let query2 = 'Update `TmpGRGI` set `period` = ' + 0 + ', `TRNo` = ' + 0 + ', `TRDate` = ' + 0 + ', `ccode` = ' + 0 + ', `Type` = ' + 0 + ', `Pname` = ' + 0 + ' '
               queryExecSample(query2)
                 .then(data2 => {
                   console.log('ddd')
                   console.log(data2)
-                  // remote.getCurrentWindow().reload()
+                  alert('successfully created')
+                  remote.getCurrentWindow().reload()
                 }).catch(err => console.log(err))
             }).catch(err => console.log(err))
         }).catch(err => console.log(err))
-      this.stockupdate()
     },
     goods: function () {
       console.log(this.type)
       if (this.type === 'GI') {
-        let query = 'SELECT * FROM `stkdetl` a INNER JOIN `imas` b ON a.CCode = b.CCode and a.ItemCd = b.SHCD and a.Qty > 0'
+        let query = 'SELECT * FROM `stkdetl` a INNER JOIN `imas` b ON a.CCode = b.CCode and a.ItemCd = b.SHCD and a.Qty > 0 and a.CCode = ' + mysql.escape(this.companycode)
         queryExecSample(query)
           .then(data => {
             this.gi.data = data

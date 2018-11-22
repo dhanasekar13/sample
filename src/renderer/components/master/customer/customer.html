@@ -14,13 +14,13 @@
 </div>
 <div id="a2">
   <div>
-<label><h2>State : </h2></label>
+<label><h3>State : </h3></label>
 <select v-model="states">
 <option v-bind:value="st['StCode']" v-for="st in state" >{{st['StCode'] + ' - - ' + st['StName']}}</option>
 </select>
 </div>
 <div>
-<label><h2>District :</h2></label>
+<label><h3>District :</h3></label>
 <select v-model="district">
   <option></option>
 <option v-for="dt in DtCode" v-bind:value="dt['DtCode']">{{dt['DtCode'] + ' - ' + dt['DtName']}}</option>
@@ -29,7 +29,7 @@
 </div>
 <div id="a3">
   <div id="a31">
-<label><h2 >Customer code : </h2></label>
+<label><h3>Customer code : </h3></label>
 <div class="dropdown">
   <input type="text" name="" v-model="custdet1" v-bind:placeholder="custdet">
 <select onchange="this.previousElementSibling.value=this.value ; this.previousElementSibling.focus()" v-model="custdet">
@@ -37,50 +37,50 @@
 <option  v-bind:value="pt['PCode']"   v-for="pt in PCode">{{pt['PCode'] }}</option>
 </select>
 </div></div><div id="a32">
-<label><h2>Name : </h2></label>
+<label><h3>Name : </h3></label>
 <input type="text" v-model="PNAME" required>
 </div></div>
 <div id="a4">
-<label><h2>Address1  :</h2></label>
+<label><h3>Address1  :</h3></label>
 <input type="text" v-model="Address1" required>
 </div>
 <div id="a5">
-<label><h2>Address2 :</h2></label>
+<label><h3>Address2 :</h3></label>
 <input type="text" v-model="Address2">
 </div>
 <div id="a6">
-<label><h2>Address3  :</h2></label>
+<label><h3>Address3  :</h3></label>
 <input type="text" v-model="Address3">
 </div><br>
 <div id="a7" >
   <div>
-<label><h2>Destination</h2></label>
+<label><h3>Destination</h3></label>
 <input type="text" v-model="Address4">
 </div><div>
-<label><h2>Fax No : </h2></label>
+<label><h3>Fax No : </h3></label>
 <input type="text" v-model="Fax">
 </div></div><br>
 <div id="a8">
   <div>
-<label><h2>phone no</h2></label>
+<label><h3>phone no</h3></label>
 <input type="text" v-model="Phone">
 </div><div>
-<label><h2>Pan no</h2></label>
+<label><h3>Pan no</h3></label>
 <input type="text" v-model="PAN">
 </div></div><br>
 <div id="a9">
   <div>
-<label><h2>Tin/Cst no</h2></label>
+<label><h3>Tin/Cst no</h3></label>
 <input type="text" v-model="ADSTNO">
 </div><div>
-<label><h2>Dl. No</h2></label>
+<label><h3>Dl. No</h3></label>
 <input type="text" v-model="DLNO">
 </div></div><br>
 <div id="a10"><div>
-<label><h2>Area Code</h2></label>
+<label><h3>Area Code</h3></label>
 <input type="text" v-model="AreaCode">
 </div><div>
-<label><h2>Bank name</h2></label>
+<label><h3>Bank name</h3></label>
 <input type="text" v-model="BName">
 </div></div><br>
 <div id="a11">

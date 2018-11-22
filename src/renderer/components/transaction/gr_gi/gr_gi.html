@@ -75,11 +75,11 @@
        </div>
     </div>
     <hr>
-    <div class="bottom" align='center' v-on:click="creategoods()">
-      <button type="button" name="button">
+    <div class="bottom" align='center' >
+      <button type="button" name="button" v-on:click="creategoods()">
 <b>CREATE</b></button>
-      <button type="button" name="button"> <b>FIND</b></button>
-      <button type="button" name="button"> <b>DELETE</b></button>
+<router-link class='btn-warning' to="/report/gr_gi" tag="button">Report</router-link>
+<button type="button" name="button"> <b>DELETE</b></button>
     </div>
     </div>
   </div>

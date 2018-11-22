@@ -157,10 +157,10 @@ var mainMenuTemplate = [
         mainWindow.loadURL(winURL)
       }
     }, {
-      label: 'SAMPLE INVOICE WITH RANGE OF INVOICE',
+      label: 'CLOSING STOCK',
       click () {
         let winURL = process.env.NODE_ENV === 'development'
-          ? `http://localhost:9080/#/abc`
+          ? `http://localhost:9080/#/transaction_report/stock`
           : `file://${__dirname}/index.html`
         mainWindow.loadURL(winURL)
       }
@@ -186,7 +186,7 @@ var mainMenuTemplate = [
         label: 'FSM|PSR WISE DETAILS',
         click () {
           let winURL = process.env.NODE_ENV === 'development'
-            ? 'http://localhost:9080/'
+            ? 'http://localhost:9080/#/transaction_report/reps'
             : `file://${__dirname}/index.html`
           mainWindow.loadURL(winURL)
         }

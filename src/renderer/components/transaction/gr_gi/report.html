@@ -1,0 +1,43 @@
+<div class="container rounded" >
+  <div class="card card-responsive">
+    <div class='card-header' align='center'>
+    <h5 >  {{goods.companydetails.CNAME}}  </h5>
+    <h2 > GI / GR TRANSACTION DETAILS</h2>
+    <h5 > From {{goods.sdate}}  - To - {{goods.edate}}</h5>
+     </div>
+     <hr>
+     <div class="card-body card-responsive">
+       <table class='table'>
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>TRNo</th>
+                <th>TRDATE</th>
+                <th>PName</th>
+                <th>Batch No</th>
+                <th>Mfg Dt</th>
+                <th>Exp Dt</th>
+                <th>Qty</th>
+                <th>Unit</th>
+                <th>Remarks</th>
+              </tr>
+            </thead>
+
+         <tbody>
+           <tr v-for="(good, index) in goods.value">
+             <td>{{good.Type}}</td>
+             <td>{{good.TRNo}}</td>
+             <td>{{good.TRDate}}</td>
+             <td>{{good.PName}}</td>
+             <td>{{good.BatchNo}}</td>
+             <td>{{good.MfgDt}}</td>
+             <td>{{good.ExpDt}}</td>
+             <td>{{good.Qty}}</td>
+             <td>{{good.Unit}}</td>
+             <td>{{good.Remarks}}</td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+  </div>
+</div>

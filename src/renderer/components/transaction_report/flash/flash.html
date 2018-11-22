@@ -1,0 +1,36 @@
+<div class="container rounded" >
+  <div class="card card-responsive">
+    <div class='card-header' align='center'>
+    <h5 >  {{flash.companydetails.CNAME}}  </h5>
+    <h2 >PRODUCT WISE SAMPLE ISSUE</h2>
+    <h5 > From {{flash.sdate}}  - To - {{flash.edate}}</h5>
+     </div>
+     <hr>
+     <div class="card-body card-responsive">
+       <table class='table table-fit'>
+            <thead>
+              <tr>
+                <th>PRODUCT NAME</th>
+                <th>Invoice No & Date</th>
+                <th>Batch Number </th>
+                <th>Batch Qty</th>
+                <th>Rate</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+
+         <tbody>
+           <tr v-for="(good, index) in flash.sample">
+             <td><span>{{good.DESCR}}</span><span  ></span></td>
+             <td>{{good.InvNo + ' , ' + new Date((good.InvDt).getTime() - ((good.InvDt).getTimezoneOffset() * 60000)).toISOString().split('T')[0]}}</td>
+             <td>{{good.BatchNo}}</td>
+              <td>{{good.Qty}}</td>
+               <td>{{good.Rate}}</td>
+             <td>{{good.TValue}}</td>
+
+           </tr>
+         </tbody>
+       </table>
+     </div>
+  </div>
+</div>

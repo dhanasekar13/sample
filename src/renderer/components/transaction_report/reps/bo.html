@@ -1,0 +1,62 @@
+<div class="container rounded">
+  <div class="card card-responsive">
+    <div class="card-header" align='center'>
+        <h5> {{bo.companydetails.CNAME}}</h5>
+        <h2> FSM / BO WISE Invoice Details</h2>
+    </div>
+    <div class="card-body ">
+        <div class="form-group row" >
+          <label class='col-sm-2'>Select The B.O</label>
+          <select  class="form-control col-sm-10"  name="" v-model="bo.selectbo">
+            <option value=""></option>
+            <option value=""   v-for="bo in bo.bodetails" v-bind:value="bo">{{bo.Name + ' - ' + bo.Desig}}</option>
+          </select>
+        </div>
+        <div class="form-group row">
+          <label class='col-sm-2'> Address 1</label>
+          <input type="text" class="form-control col-sm-4" name="" v-bind:value="bo.selectbo.Address1" disabled>
+          <label class='col-sm-2'> Address 2</label>
+          <input type="text"  class="form-control col-sm-4" name="" v-bind:value="bo.selectbo.Address2" disabled>
+        </div>
+        <div class='form-group row'>   <label class='col-sm-2'> Address 3</label>
+          <input type="text"  class="form-control col-sm-4" name="" v-bind:value="bo.selectbo.Address3" disabled>
+          <label class='col-sm-2'> destination with phone no</label>
+          <input type="text"  class="form-control col-sm-4" name="" v-bind:value="bo.selectbo.desti + bo.selectbo.Phone" disabled>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2">Starting Date</label>
+            <input type="date" name="" class="form-control col-sm-4"  v-model="bo.sdate">
+            <label class="col-sm-2">Ending Date</label>
+            <input type="date" class="form-control col-sm-4"  v-model="bo.edate">
+        </div>
+    </div>
+        <div class='form-group row' v-if="choose">
+            <label class='col-sm-3'>Select Any Item</label>
+            <select  class="col-sm-6" name="" v-model="search">
+                <option v-for="item in Object.keys(grouparray)" v-bind:value="grouparray[item]">{{item}}</option>
+            </select>
+
+        </div>
+          <p v-else></p>
+  </div>
+  <div class="card-body">
+      <table class="table table-fit">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Invoice No , Date</th>
+            <th>Quantity</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in sorted">
+            <td>{{item.DESCR}}</td>
+            <td>{{item.InvNo + ' - ' + new Date((item.InvDt).getTime() - ((item.InvDt).getTimezoneOffset() * 60000)).toISOString().split('T')[0]}}</td>
+            <td>{{item.Qty}}</td>
+            <td>{{item.TValue}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>

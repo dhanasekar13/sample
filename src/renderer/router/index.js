@@ -77,6 +77,11 @@ export default new Router({
       component: require('@/components/transaction_report/flash/flash').default
     },
     {
+      path: '/transaction_report/reps',
+      name: '/transaction_report_reps',
+      component: require('@/components/transaction_report/reps/bo').default
+    },
+    {
       path: '/transaction_report/gatepass',
       name: 'transaction_report_gatepass',
       component: require('@/components/transaction_report/gatepass/gatepass').default,
@@ -92,6 +97,11 @@ export default new Router({
       path: '/transaction_report/sampleproduct',
       name: 'transaction_report_product',
       component: require('@/components/transaction_report/sample_details/product').default
+    },
+    {
+      path: '/report/gr_gi',
+      name: 'report_gr_gi',
+      component: require('@/components/transaction/gr_gi/report').default
     }
   ]
 })

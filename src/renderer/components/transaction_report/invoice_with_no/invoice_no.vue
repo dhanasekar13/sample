@@ -1,5 +1,5 @@
 <template src='./invoice.html'>
-=
+
 </template>
 <script>
 import { rl, rp, kc } from '@/components/database/company'

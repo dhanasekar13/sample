@@ -1,4 +1,4 @@
-<template src='./flash.html'>
+<template src='./report.html'>
 </template>
 <script>
 import { rl, rp, kc } from '@/components/database/company'
@@ -8,21 +8,36 @@ const storage = require('electron-json-storage')
 export default {
   data () {
     return {
-      flash: {
+      goods: {
         companydetails: {},
         sdate: '',
         edate: '',
-        sample: {}
+        value: {}
       }
     }
   },
+  created: function () {
+    var self = this
+    console.log(storage.get('login', (err, data) => {
+      if (err) throw err
+      console.log(data)
+      if (data.company === '01') {
+        self.goods.companydetails = rp
+      } else if (data.company === '02') {
+        self.goods.companydetails = rl
+      } else {
+        self.goods.companydetails = kc
+      }
+    }))
+    self.prompted()
+  },
   methods: {
     run: function () {
-      let query = 'SELECT * FROM `invdetails` a INNER JOIN `imas` b ON a.CCode = b.CCode AND a.ItemCode = b.SHCD WHERE a.InvDt BETWEEN ' + mysql.escape(this.flash.sdate) + ' AND ' + mysql.escape(this.flash.edate) + ' AND a.CCode = ' + mysql.escape(this.flash.companydetails.CCODE) + ' ORDER BY ItemCode'
+      let query = 'SELECT * FROM `grgitran` WHERE `TRDate` between ' + mysql.escape(this.goods.sdate) + ' and ' + mysql.escape(this.goods.edate)
       queryExecSample(query)
-        .then(value => {
-          console.log(value)
-          this.flash.sample = value
+        .then(data => {
+          this.goods.value = data
+          console.log(this.goods.value)
         })
     },
     prompted: function () {
@@ -33,7 +48,7 @@ export default {
         value: (new Date().toISOString().split('T')[0])
       })
         .then(r => {
-          this.flash.sdate = r
+          this.goods.sdate = r
           this.prompted1()
         })
     },
@@ -45,25 +60,10 @@ export default {
         value: (new Date().toISOString().split('T')[0])
       })
         .then(r1 => {
-          this.flash.edate = r1
+          this.goods.edate = r1
           this.run()
         })
     }
-  },
-  created: function () {
-    var self = this
-    console.log(storage.get('login', (err, data) => {
-      if (err) throw err
-      console.log(data)
-      if (data.company === '01') {
-        self.flash.companydetails = rp
-      } else if (data.company === '02') {
-        self.flash.companydetails = rl
-      } else {
-        self.flash.companydetails = kc
-      }
-    }))
-    self.prompted()
   }
 }
 </script>
