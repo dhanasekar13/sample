@@ -1,28 +1,63 @@
 <template>
  <div>
  <div class="container" align=center>
-    <h1>Retort Sample application SOP </h1>
-    <p>
-      menus
-        1 - Master => create , read , update and delete the item , customer ,area and regional details
-        2 - Transcation => gate pass , invoice ,good return and issue , validation and credit note details using crud operation
-        3 - Report => Report for master and transcation using CRUD operation
-    </p>
+    <h3>Retort Sample Application SOP </h3>
+    <div class='row'>
+        <div class="card col-sm-6" style="width:18rem">
+            <div class="card-body">
+                <h6 class="card-title">Master Menu</h6>
+                <p class="card-text">
+                create , read , update and delete the item , customer , fsmpsr ,area and regional details  </p>
+                <button class="btn btn-info">ITEM </button>
+                <button class="btn btn-info">CUSTOMER</button>
+                <button class="btn btn-info">FSMPSR</button>
+            </div>
+        </div>
+        <div class="card col-sm-6" style="width:18rem">
+            <div class="card-body">
+                <h6 class="card-title">Transcation Menu</h6>
+                <p class="card-text">
+                gate pass , invoice ,good return and issue , validation and credit note details using crud operation</p>
+                <button class="btn btn-info">GATE PASS</button>
+                <button class="btn btn-info">INVOICE</button>
+                <button class="btn btn-info">GR / GI</button>
+            </div>
+        </div>
     </div>
+            <br>
+    <div class='row'>
+        <div class="card col-sm-6" style="width:18rem">
+            <div class="card-body">
+                <h6 class="card-title">Master Report Menu</h6>
+                <p class="card-text">
+                create , read , update and delete the item , customer , fsmpsr ,area and regional details    </p>
+                <button class="btn btn-info">ITEM</button>
+                <button class="btn btn-info">PSR / FSM</button>
+                <button class="btn btn-info">CUSTOMER</button>
+            </div>
+        </div>
+        <div class="card col-sm-6" style="width:18rem">
+            <div class="card-body">
+                  <h6 class="card-title">Transcation Menu</h6>
+                  <p class="card-text">
+                  gate pass , invoice ,good return and issue , validation and credit note details using crud operation</p>
+                  <button class="btn btn-info">INVOICE</button>
+                  <button class="btn btn-info">CLOSING STOCK</button>
+                  <button class="btn btn-info">SAMPLE DETAILS</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
  </div>
 </template>
 <script>
-import { ipcRenderer } from 'electron'
 export default {
-
   methods: {
-    btn () {
-      ipcRenderer.send('create', 1)
-    }
   },
   created () {
     const storage = require('electron-json-storage')
-    this.btn()
     console.log(storage.get('login', function (error, data) {
       if (error) throw error
       console.log(data)

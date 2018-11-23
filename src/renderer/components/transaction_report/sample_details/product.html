@@ -1,0 +1,54 @@
+<div class="container rounded">
+  <div class="card card-responsive">
+    <div class="card-header" align='center'>
+      <h2> {{product.companydetails.CNAME}}</h2>
+      <h4> PRODUCT WISE DETAILS</h4>
+    </div>
+    <div class="card-body">
+        <div class="form-group row">
+            <label class='col-sm-2'> Select Item</label>
+            <select class="form-control col-sm-10" name="" v-model="product.selectproduct">
+                <option value=""></option>
+                <option value="" v-for="pd in Object.keys(grouparray)" v-bind:value="grouparray[pd]">{{pd}}</option>
+            </select>
+        </div>
+        <div class="form-group row">
+            <label class='col-sm-5'> Selective product in the group</label>
+            <select class="form-control col-sm-6" name="" v-model="product.productslt">
+                <option value="" v-bind:value="list" v-for="list in product.selectproduct">{{list.DESCR + ' - ' + list.PCAPCTY}}</option>
+            </select>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2">Starting Date</label>
+            <input type="date" name="" class="form-control col-sm-3"  v-model="product.sdate">
+            <label class="col-sm-2">Ending Date</label>
+            <input type="date" class="form-control col-sm-3"  v-model="product.edate">
+            <button type="button" v-on:click="exec" class="form-control col-sm-2 btn btn-success" name="button">submit</button>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-5">B.O / FSM / RSM</label>
+          <select class="form-control col-sm-7" name="" v-model="product.data">
+            <option v-for="bo in Object.keys(grouparray1)" v-bind:value="grouparray1[bo]">{{bo}}</option>
+          </select>
+        </div>
+        <div class="">
+            <table class="table table-fit">
+                <thead>
+                  <tr>
+                      <th>Invoice No</th>
+                      <th>Invoice Date</th>
+                      <th>Quantity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in product.data">
+                    <td>{{item.InvNo}}</td>
+                    <td>{{new Date((item.InvDt).getTime() - ((item.InvDt).getTimezoneOffset() * 60000)).toISOString().split('T')[0]}}</td>
+                    <td>{{item.Qty}}</td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+  </div>
+</div>

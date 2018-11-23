@@ -21,7 +21,7 @@
 
          <tbody>
            <tr v-for="(good, index) in flash.sample">
-             <td><span>{{good.DESCR}}</span><span  ></span></td>
+             <td ><span v-if="flash.sample[index] === flash.sample[index - 1]">{{good.DESCR}}</span><span v-else ></span></td>
              <td>{{good.InvNo + ' , ' + new Date((good.InvDt).getTime() - ((good.InvDt).getTimezoneOffset() * 60000)).toISOString().split('T')[0]}}</td>
              <td>{{good.BatchNo}}</td>
               <td>{{good.Qty}}</td>
